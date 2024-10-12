@@ -1,0 +1,30 @@
+863566 - Luis Henrique Ferreira Costa
+
+1)a) (A+B) . (A+B+C)
+b) (A+B'+C') . (A'+B+C) . (A+B+C')
+c) (B'+C) . (B+C')
+d) (B'+ C) . (B+C')
+e) (A+B) . (A+C)
+
+2) B.C' + A'.C
+b) B.C + A'.C
+c) B.C' + A.B'
+d) B.C + B'+C
+e) B'
+
+3)a)(C'+ D) . (C' + D') . (A'+B') . (C+D')
+b) B . (C'+D')
+c) (A+D) . (A+B'+D') . (A'+C'+D')
+d)(A+C+D').(A' + B +D') . (A'+B'+C'+D)
+e)(A+C'+D) . (B+C+D') . (A'+C'+D')
+
+4)A.B.C' + A'.B.C + A'.B.C.D'
+b) A.B'.C + A'.C.D + A'+B'+C'+D
+c) B'.C'.D' + A'.B'.D' A.B'.C.D + A'+B+C+D
+D)A.C.D' + A'.B'.D' + A'+B'+C'+D
+E) A.C'.D + B'.C.D' + A'.C'.D'
+
+5) (B' + C') . A
+6) A'.B'.C' + B'.B'.C' + A + C+ D . A
+7) S1=Z
+8)S1=(w.z.x)+(w'.x'.y.z')

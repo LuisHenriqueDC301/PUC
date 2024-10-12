@@ -1,0 +1,146 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1539-g2693dd32b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "C:\ICARUS~1\lib\ivl\system.vpi";
+:vpi_module "C:\ICARUS~1\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\ICARUS~1\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\ICARUS~1\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\ICARUS~1\lib\ivl\va_math.vpi";
+S_000001666a01d540 .scope module, "ex21" "ex21" 2 1;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 1 "s1";
+    .port_info 1 /OUTPUT 1 "s2";
+    .port_info 2 /INPUT 1 "x";
+    .port_info 3 /INPUT 1 "y";
+o0000016669edc0b8 .functor BUFZ 1, C4<z>; HiZ drive
+L_0000016669eca200 .functor NOT 1, o0000016669edc0b8, C4<0>, C4<0>, C4<0>;
+o0000016669edc0e8 .functor BUFZ 1, C4<z>; HiZ drive
+L_0000016669ec9e10 .functor OR 1, L_0000016669eca200, o0000016669edc0e8, C4<0>, C4<0>;
+L_0000016669eca0b0 .functor NOT 1, L_0000016669ec9e10, C4<0>, C4<0>, C4<0>;
+L_0000016669ec9f60 .functor AND 1, o0000016669edc0b8, L_0000016669eca0b0, C4<1>, C4<1>;
+L_0000016669eca2e0 .functor NOT 1, o0000016669edc0e8, C4<0>, C4<0>, C4<0>;
+L_0000016669eca3c0 .functor AND 1, o0000016669edc0b8, L_0000016669eca2e0, C4<1>, C4<1>;
+v0000016669ec9860_0 .net *"_ivl_0", 0 0, L_0000016669eca200;  1 drivers
+v0000016669ec8dc0_0 .net *"_ivl_2", 0 0, L_0000016669ec9e10;  1 drivers
+v0000016669ec9180_0 .net *"_ivl_4", 0 0, L_0000016669eca0b0;  1 drivers
+v0000016669ec8e60_0 .net *"_ivl_8", 0 0, L_0000016669eca2e0;  1 drivers
+v0000016669ec9540_0 .net "s1", 0 0, L_0000016669ec9f60;  1 drivers
+v0000016669ec9220_0 .net "s2", 0 0, L_0000016669eca3c0;  1 drivers
+v0000016669ec92c0_0 .net "x", 0 0, o0000016669edc0b8;  0 drivers
+v0000016669ec8f00_0 .net "y", 0 0, o0000016669edc0e8;  0 drivers
+S_000001666a01d6d0 .scope module, "ex22" "ex22" 2 6;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 1 "s1";
+    .port_info 1 /OUTPUT 1 "s2";
+    .port_info 2 /INPUT 1 "x";
+    .port_info 3 /INPUT 1 "y";
+o0000016669edc328 .functor BUFZ 1, C4<z>; HiZ drive
+L_0000016669eca190 .functor NOT 1, o0000016669edc328, C4<0>, C4<0>, C4<0>;
+o0000016669edc358 .functor BUFZ 1, C4<z>; HiZ drive
+L_0000016669eca120 .functor OR 1, L_0000016669eca190, o0000016669edc358, C4<0>, C4<0>;
+L_0000016669ec9fd0 .functor NOT 1, o0000016669edc328, C4<0>, C4<0>, C4<0>;
+L_0000016669eca430 .functor AND 1, L_0000016669ec9fd0, o0000016669edc358, C4<1>, C4<1>;
+L_0000016669ec9ef0 .functor OR 1, L_0000016669eca120, L_0000016669eca430, C4<0>, C4<0>;
+L_0000016669eca270 .functor NOT 1, o0000016669edc328, C4<0>, C4<0>, C4<0>;
+L_0000016669eca4a0 .functor OR 1, L_0000016669eca270, o0000016669edc358, C4<0>, C4<0>;
+v0000016669ec8fa0_0 .net *"_ivl_0", 0 0, L_0000016669eca190;  1 drivers
+v0000016669ec9360_0 .net *"_ivl_10", 0 0, L_0000016669eca270;  1 drivers
+v0000016669ec97c0_0 .net *"_ivl_2", 0 0, L_0000016669eca120;  1 drivers
+v0000016669ec9b80_0 .net *"_ivl_4", 0 0, L_0000016669ec9fd0;  1 drivers
+v0000016669ec9c20_0 .net *"_ivl_6", 0 0, L_0000016669eca430;  1 drivers
+v0000016669ec9400_0 .net "s1", 0 0, L_0000016669ec9ef0;  1 drivers
+v0000016669ec94a0_0 .net "s2", 0 0, L_0000016669eca4a0;  1 drivers
+v0000016669ec95e0_0 .net "x", 0 0, o0000016669edc328;  0 drivers
+v0000016669ec9680_0 .net "y", 0 0, o0000016669edc358;  0 drivers
+S_000001666a01cbe0 .scope module, "main" "main" 2 16;
+ .timescale 0 0;
+v0000016669f272a0_0 .net "s1", 0 0, L_0000016669f28480;  1 drivers
+v0000016669f268a0_0 .net "s2", 0 0, L_0000016669f28100;  1 drivers
+v0000016669f27660_0 .var "x", 0 0;
+v0000016669f26c60_0 .var "y", 0 0;
+S_000001666a01cd70 .scope module, "EX23" "ex23" 2 21, 2 11 0, S_000001666a01cbe0;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 1 "s1";
+    .port_info 1 /OUTPUT 1 "s2";
+    .port_info 2 /INPUT 1 "x";
+    .port_info 3 /INPUT 1 "y";
+L_0000016669ec9da0 .functor NOT 1, v0000016669f27660_0, C4<0>, C4<0>, C4<0>;
+L_0000016669ec9e80 .functor NOT 1, v0000016669f26c60_0, C4<0>, C4<0>, C4<0>;
+L_0000016669f28560 .functor AND 1, L_0000016669ec9da0, L_0000016669ec9e80, C4<1>, C4<1>;
+L_0000016669f28090 .functor NOT 1, L_0000016669f28560, C4<0>, C4<0>, C4<0>;
+L_0000016669f28800 .functor OR 1, v0000016669f27660_0, v0000016669f26c60_0, C4<0>, C4<0>;
+L_0000016669f28480 .functor AND 1, L_0000016669f28090, L_0000016669f28800, C4<1>, C4<1>;
+L_0000016669f28100 .functor OR 1, v0000016669f27660_0, v0000016669f26c60_0, C4<0>, C4<0>;
+v0000016669ec9720_0 .net *"_ivl_0", 0 0, L_0000016669ec9da0;  1 drivers
+v0000016669ec99a0_0 .net *"_ivl_2", 0 0, L_0000016669ec9e80;  1 drivers
+v0000016669ec9a40_0 .net *"_ivl_4", 0 0, L_0000016669f28560;  1 drivers
+v0000016669ec9ae0_0 .net *"_ivl_6", 0 0, L_0000016669f28090;  1 drivers
+v0000016669ec8d20_0 .net *"_ivl_8", 0 0, L_0000016669f28800;  1 drivers
+v0000016669f27340_0 .net "s1", 0 0, L_0000016669f28480;  alias, 1 drivers
+v0000016669f27160_0 .net "s2", 0 0, L_0000016669f28100;  alias, 1 drivers
+v0000016669f26a80_0 .net "x", 0 0, v0000016669f27660_0;  1 drivers
+v0000016669f273e0_0 .net "y", 0 0, v0000016669f26c60_0;  1 drivers
+S_0000016669ea2720 .scope begin, "Guia04" "Guia04" 2 26, 2 26 0, S_000001666a01cbe0;
+ .timescale 0 0;
+S_0000016669ea28b0 .scope begin, "start" "start" 2 22, 2 22 0, S_000001666a01cbe0;
+ .timescale 0 0;
+    .scope S_000001666a01cbe0;
+T_0 ;
+    %fork t_1, S_0000016669ea28b0;
+    %jmp t_0;
+    .scope S_0000016669ea28b0;
+t_1 ;
+    %pushi/vec4 1, 1, 1;
+    %store/vec4 v0000016669f27660_0, 0, 1;
+    %pushi/vec4 1, 1, 1;
+    %store/vec4 v0000016669f26c60_0, 0, 1;
+    %end;
+    .scope S_000001666a01cbe0;
+t_0 %join;
+    %end;
+    .thread T_0;
+    .scope S_000001666a01cbe0;
+T_1 ;
+    %fork t_3, S_0000016669ea2720;
+    %jmp t_2;
+    .scope S_0000016669ea2720;
+t_3 ;
+    %vpi_call 2 27 "$display", "\012x'&y+x&y' = s\012" {0 0 0};
+    %vpi_call 2 29 "$display", "x y = s1 s2" {0 0 0};
+    %vpi_call 2 30 "$monitor", "%b %b = %b %b ", v0000016669f27660_0, v0000016669f26c60_0, v0000016669f272a0_0, v0000016669f268a0_0 {0 0 0};
+    %delay 1, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000016669f27660_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000016669f26c60_0, 0, 1;
+    %delay 1, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000016669f27660_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000016669f26c60_0, 0, 1;
+    %delay 1, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000016669f27660_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000016669f26c60_0, 0, 1;
+    %delay 1, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000016669f27660_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000016669f26c60_0, 0, 1;
+    %delay 1, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000016669f27660_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0000016669f26c60_0, 0, 1;
+    %end;
+    .scope S_000001666a01cbe0;
+t_2 %join;
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "Guia_04.v";
