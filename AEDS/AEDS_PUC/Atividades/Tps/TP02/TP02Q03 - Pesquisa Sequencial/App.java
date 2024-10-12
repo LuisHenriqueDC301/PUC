@@ -2,6 +2,7 @@
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,24 +12,22 @@ import java.util.Locale;
 import java.util.Scanner;
 
 //Classe Principal
-
+//Classe Principal
 public class App {
 
-    //main
+    //main 
     public static void main(String[] args) throws ParseException, IOException {
-        @SuppressWarnings("deprecation")
-        Locale locale = new Locale("pt", "BR");
-        Locale.setDefault(locale);
-        
+        double inicio, fim;
+
         String path = "/tmp/pokemon.csv"; // Caminho do arquivo
         BufferedReader br = new BufferedReader(new FileReader(path));
         Scanner sc = new Scanner(System.in);
-    
+
         // Ignora a primeira linha (se for um cabeçalho)
         br.readLine();
-    
+
         // Criando uma lista de todos os pokemons
-        ArrayList<Pokemon> lista_pokemon = new ArrayList<Pokemon>();
+        ArrayList<Pokemon> lista_pokemon = new ArrayList<>();
         String line;
         line = br.readLine();
         Pokemon pokemon = new Pokemon();
@@ -40,14 +39,50 @@ public class App {
             lista_pokemon.add(pokemon);
         }
 
-       String n = sc.nextLine();
-       while(!n.equals("FIM")){
-        int x = Integer.parseInt(n);
-        lista_pokemon.get(x-1).imprimir();
+        // Criando um subarray de pokemons
+        ArrayList<Pokemon> subarray = new ArrayList<>();
+        String n = sc.nextLine();
+        while (!n.equals("FIM")) {
+            int x = Integer.parseInt(n);
+            subarray.add(lista_pokemon.get(x - 1));
+            n = sc.nextLine();
+        }
+
+        // Variáveis para medir tempo de execução e comparações
+        inicio = now();
+        int comparacoes = 0; // Contador de comparações
+
+        // Pesquisa sequencial
         n = sc.nextLine();
-       }       
+        while (!n.equals("FIM")) {
+            boolean result = false;
+            for (int i = 0; i < subarray.size(); i++) {
+                comparacoes++; // Contando cada comparação
+                if (n.equals(subarray.get(i).getName())) {
+                    result = true;
+                    i = subarray.size();
+                }
+            }
+            if (result) {
+                System.out.println("SIM");
+            } else {
+                System.out.println("NAO");
+            }
+            n = sc.nextLine();
+        }
+        fim = now();
+        
+
+        // Geração do arquivo de log
+        String matricula = "863566"; 
+        FileWriter logWriter = new FileWriter("863566_sequencial.txt");
+        logWriter.write(matricula + "\t" + (fim - inicio) / 1000.0   + "\t" + comparacoes);
+        logWriter.close();
     }
-    
+    public static long now() {
+        return new Date().getTime();
+    }
+
 }
 //Pokemon
 class Pokemon {

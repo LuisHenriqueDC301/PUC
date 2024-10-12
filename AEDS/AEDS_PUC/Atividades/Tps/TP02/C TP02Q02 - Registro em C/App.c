@@ -7,7 +7,7 @@
 #define MAX_NAME_LENGTH 100
 #define MAX_DESC_LENGTH 255
 #define MAX_TYPES 2
-#define MAX_ABILITIES 5
+#define MAX_ABILITIES 6
 
 // Estrutura Date para armazenar a data
 typedef struct Date {
@@ -32,38 +32,38 @@ typedef struct {
 } Pokemon;
 
 // Função para criar um Pokémon vazio
-Pokemon pokemon_vazio() {
-    Pokemon pokemon;
+Pokemon* pokemon_vazio() {
+    Pokemon* pokemon = (Pokemon*) malloc(sizeof(Pokemon));
 
-    pokemon.id = -1;
-    pokemon.generation = -1;
+    pokemon->id = -1;
+    pokemon->generation = -1;
 
     // Strings e arrays já são inicializados com zeros, então não precisa de calloc
-    strcpy(pokemon.name, "");
-    strcpy(pokemon.description, "");
+    strcpy(pokemon->name, "");
+    strcpy(pokemon->description, "");
 
     for (int i = 0; i < MAX_TYPES; i++) {
-        strcpy(pokemon.types[i], "");
+        strcpy(pokemon->types[i], "");
     }
 
     for (int i = 0; i < MAX_ABILITIES; i++) {
-        strcpy(pokemon.abilities[i], "");
+        strcpy(pokemon->abilities[i], "");
     }
 
-    pokemon.weight = 0.0;
-    pokemon.height = 0.0;
-    pokemon.captureRate = 0;
-    pokemon.isLegendary = 0;
+    pokemon->weight = 0.0;
+    pokemon->height = 0.0;
+    pokemon->captureRate = 0;
+    pokemon->isLegendary = 0;
 
-    pokemon.data.dia = 0;
-    pokemon.data.mes = 0;
-    pokemon.data.ano = 0;
+    pokemon->data.dia = 0;
+    pokemon->data.mes = 0;
+    pokemon->data.ano = 0;
 
     return pokemon;
 }
 
 // Função para criar um novo Pokémon
-Pokemon pokemon_new(int id, 
+Pokemon* pokemon_new(int id, 
     int generation,
     const char* name,
     const char *description,
@@ -75,99 +75,295 @@ Pokemon pokemon_new(int id,
     int isLegendary,
     Date data) {
 
-    Pokemon pokemon;
+    Pokemon* pokemon = (Pokemon*) malloc(sizeof(Pokemon));
 
-    pokemon.id = id;
-    pokemon.generation = generation;
+    pokemon->id = id;
+    pokemon->generation = generation;
 
     // Copiar strings e arrays
-    strcpy(pokemon.name, name);
-    strcpy(pokemon.description, description);
+    strcpy(pokemon->name, name);
+    strcpy(pokemon->description, description);
 
     for (int i = 0; i < MAX_TYPES; i++) {
-        strcpy(pokemon.types[i], types[i]);
+        strcpy(pokemon->types[i], types[i]);
     }
 
     for (int i = 0; i < MAX_ABILITIES; i++) {
-        strcpy(pokemon.abilities[i], abilities[i]);
+        strcpy(pokemon->abilities[i], abilities[i]);
     }
 
-    pokemon.weight = weight;
-    pokemon.height = height;
-    pokemon.captureRate = captureRate;
-    pokemon.isLegendary = isLegendary;
-    pokemon.data = data;
+    pokemon->weight = weight;
+    pokemon->height = height;
+    pokemon->captureRate = captureRate;
+    pokemon->isLegendary = isLegendary;
+    pokemon->data = data;
 
     return pokemon;
 }
+Pokemon* clone(Pokemon *pokemon1){
+     Pokemon* pokemon = (Pokemon*) malloc(sizeof(Pokemon));
+     pokemon1-> id = pokemon->id;
+     
+
+}
 void imprimirTipos(char tipos[MAX_TYPES][MAX_NAME_LENGTH], char* buffer, int n) {
     strcpy(buffer, "[");
+    int first = 1; // Flag para saber se é o primeiro elemento
     for (int i = 0; i < n; i++) {
-        strcat(buffer, tipos[i]);
-        if (i < n - 1) {
-            strcat(buffer, ", "); // Adiciona uma vírgula entre os tipos
+        if (strcmp(tipos[i], "") != 0) {  // Ignora tipos vazios
+            if (!first) {
+                strcat(buffer, ", "); // Adiciona vírgula somente se não for o primeiro
+            }
+            strcat(buffer, "'");       // Adiciona aspas simples
+            strcat(buffer, tipos[i]);  // Adiciona o tipo
+            strcat(buffer, "'");       // Fecha aspas simples
+            first = 0;
         }
     }
     strcat(buffer, "]");
 }
 
-// Função para imprimir as habilidades de um Pokémon
 void imprimirHabilidades(char habilidades[MAX_ABILITIES][MAX_NAME_LENGTH], char* buffer, int n) {
     strcpy(buffer, "[");
+    int first = 1; // Flag para saber se é o primeiro elemento
     for (int i = 0; i < n; i++) {
-        strcat(buffer, habilidades[i]);
-        if (i < n - 1) {
-            strcat(buffer, ", "); // Adiciona uma vírgula entre as habilidades
+        if (strcmp(habilidades[i], "") != 0) {  // Ignora habilidades vazias
+            if (!first) {
+                strcat(buffer, ", "); // Adiciona vírgula somente se não for o primeiro
+            }
+            strcat(buffer, "'");           // Adiciona aspas simples
+            strcat(buffer, habilidades[i]);// Adiciona a habilidade
+            strcat(buffer, "'");           // Fecha aspas simples
+            first = 0;
         }
     }
     strcat(buffer, "]");
 }
 
-//Funcao para ler a linha e adicionar no pokemon
-void ler( char* linha, Pokemon pokemon){
-
-}
-
-// Função para imprimir todas as informações de um Pokémon
-void imprimir(Pokemon pokemon) {
-    char tiposStr[256]; // Buffer para armazenar os tipos
-    char habilidadesStr[256]; // Buffer para armazenar as habilidades
+void imprimir(Pokemon *pokemon) {
+    char tiposStr[256];        // Buffer para armazenar os tipos
+    char habilidadesStr[256];  // Buffer para armazenar as habilidades
 
     // Preencher os buffers com os tipos e habilidades formatados
-    imprimirTipos(pokemon.types, tiposStr, MAX_TYPES);
-    imprimirHabilidades(pokemon.abilities, habilidadesStr, MAX_ABILITIES);
+    imprimirTipos(pokemon->types, tiposStr, MAX_TYPES);
+    imprimirHabilidades(pokemon->abilities, habilidadesStr, MAX_ABILITIES);
 
+
+    
     // Imprimir as informações formatadas do Pokémon
-    printf("[#%d -> %s: %s - %s - %s - %.1fkg - %.1fm - %d%% - %s - %d] %02d/%02d/%04d\n",
-           pokemon.id, pokemon.name, pokemon.description, tiposStr, habilidadesStr, 
-           pokemon.weight, pokemon.height, pokemon.captureRate, 
-           (pokemon.isLegendary ? "true" : "false"), pokemon.generation, 
-           pokemon.data.dia, pokemon.data.mes, pokemon.data.ano);
+    printf("[#%d -> %s: %s - %s - %s - %.1fkg - %.1fm - %d%% - %s - %d gen] - %02d/%02d/%04d\n",
+           pokemon->id, pokemon->name, pokemon->description, tiposStr, habilidadesStr, 
+           pokemon->weight, pokemon->height, pokemon->captureRate, 
+           (pokemon->isLegendary ? "true" : "false"), pokemon->generation, 
+           pokemon->data.dia, pokemon->data.mes, pokemon->data.ano);
 }
 
-int main() {
-    // Criar um Pokémon vazio
-    Pokemon p1 = pokemon_vazio();
+char **strsplit(const char *src, const char *delim, int *count) {
+    char *pbuf = NULL;
+    int srclen = strlen(src);
+    int delimlen = strlen(delim);
+    char **pparr = NULL;
+    *count = 0;
 
-    // Exemplo de tipos e habilidades
-    char types[MAX_TYPES][MAX_NAME_LENGTH] = {"Water", "Flying"};
-    char abilities[MAX_ABILITIES][MAX_NAME_LENGTH] = {"Torrent", "Rain Dish"};
+    // Alocando o buffer temporário
+    pbuf = (char *)malloc(srclen + 1);
+    if (!pbuf) return NULL;
 
-    // Data de captura
-    Date captureDate = {25, 12, 2023};
+    strcpy(pbuf, src);
 
-    // Criar um novo Pokémon com dados preenchidos
-    Pokemon p2 = pokemon_new(1, 1, "Squirtle", "Tiny Turtle Pokémon", types, abilities, 9.0, 0.5, 45, 0, captureDate);
+    char *start = pbuf;
+    char *end = strstr(start, delim);
 
-    imprimir(p2);
+    while (end != NULL) {
+        // Adiciona substring encontrada entre os delimitadores
+        pparr = (char **)realloc(pparr, (*count + 1) * sizeof(char *));
+        *end = '\0';  // Substitui o delimitador por fim de string
+        pparr[*count] = strdup(start);  // Copia a parte antes do delimitador
+        (*count)++;
+
+        // Verifica se há delimitadores consecutivos e adiciona strings vazias
+        start = end + delimlen;
+        while (strncmp(start, delim, delimlen) == 0) {
+            pparr = (char **)realloc(pparr, (*count + 1) * sizeof(char *));
+            pparr[*count] = strdup("");  // Adiciona uma string vazia
+            (*count)++;
+            start += delimlen;
+        }
+
+        // Procura o próximo delimitador
+        end = strstr(start, delim);
+    }
+
+    // Adiciona o último pedaço da string (depois do último delimitador)
+    pparr = (char **)realloc(pparr, (*count + 1) * sizeof(char *));
+    pparr[*count] = strdup(start);  // Copia o último pedaço
+    (*count)++;
+
+    // Finaliza o array com NULL
+    pparr = (char **)realloc(pparr, (*count + 1) * sizeof(char *));
+    pparr[*count] = NULL;
+
+    free(pbuf);
+    return pparr;
+}
 
 
-    //Lidando com arquivo
+void strsplitfree( char ** strlist )
+{
+    int i = 0;
 
-    FILE file;
-    char *linha[MAX];
+    while( strlist[i])
+        free( strlist[i++] );
+
+    free( strlist );
+}
+
+void trim(char *str) {
+    int start = 0;
+    int end = strlen(str) - 1;
+
+    // Remover espaços à esquerda
+    while (str[start] == ' ' || str[start] == '\t' || str[start] == '\n') {
+        start++;
+    }
+
+    // Remover espaços à direita
+    while ((end >= start) && (str[end] == ' ' || str[end] == '\t' || str[end] == '\n')) {
+        end--;
+    }
+
+    // Mover a parte "trimmed" para o início da string e adicionar o terminador nulo
+    int i;
+    for (i = start; i <= end; i++) {
+        str[i - start] = str[i];
+    }
+    str[i - start] = '\0';  // Adiciona o terminador nulo no final da string
+}
+
+// Função para ler e popular as informações de um Pokémon a partir de uma linha
+void ler(char *linha, Pokemon *pokemon) {
+    int c = 0;
+    int count = 0;
+    char **array = strsplit(linha, ",", &count); // Dividindo a linha em várias partes
     
-    file = fopen("./pokemon.csv", "r");
-    fgets(linha, sizeof(linha), file);
+    // Atribuindo os dados
+    pokemon->id = atoi(array[c++]);
+    pokemon->generation = atoi(array[c++]);
+    strcpy(pokemon->name, array[c++]);
+    strcpy(pokemon->description, array[c++]);
+
+    // Lidando com os tipos
+    
+    strcpy(pokemon->types[0], array[c++]);
+    if (strcmp(array[c], "") != 0) {
+        strcpy(pokemon->types[1], array[c++]);
+    } else {
+        strcpy(pokemon->types[1], "");
+        c++;
+    }
+
+    // Lidando com as habilidades
+    int habilidadesIndex = 0;
+    while (habilidadesIndex <= MAX_ABILITIES && c < count) {
+        strcpy(pokemon->abilities[habilidadesIndex], array[c]);
+        habilidadesIndex++;
+        c++;
+        if (strchr(array[c - 1], ']')) { // Se encontrou o fechamento de lista
+            break;
+        }
+    }
+
+    // Removendo os caracteres extras das habilidades
+    for (int i = 0; i < habilidadesIndex; i++) {
+        char *habilidade = pokemon->abilities[i];
+        int len = strlen(habilidade);
+        char habilidadeLimpa[MAX_NAME_LENGTH] = "";
+        int idx = 0;
+
+        // Percorrendo a string e copiando apenas os caracteres válidos
+        for (int j = 0; j < len; j++) {
+            if (habilidade[j] != '[' && habilidade[j] != ']' && habilidade[j] != '"' && habilidade[j] != '\'') {
+                habilidadeLimpa[idx++] = habilidade[j];
+            }
+        }
+        habilidadeLimpa[idx] = '\0';  // Finaliza a string limpa
+        trim(habilidadeLimpa);        // Remover espaços à esquerda e direita
+        strcpy(pokemon->abilities[i], habilidadeLimpa);  // Copia a string limpa de volta
+    }
+
+    // Lidando com peso e altura
+
+    if (strcmp(array[c], "") == 0) {
+    pokemon->weight = 0.0;  // Corrigido para atribuição
+    } else {
+        pokemon->weight = atof(array[c]);  // Corrigido para atribuição
+    }
+    c++;
+
+    if (strcmp(array[c], "") == 0) {
+        pokemon->height = 0.0;  // Corrigido para atribuição
+    } else {
+        pokemon->height = atof(array[c]);  // Corrigido para atribuição
+    }
+    c++;
+   
+
+    // Taxa de captura e lendário
+    pokemon->captureRate = atoi(array[c++]);
+    pokemon->isLegendary = (strcmp(array[c++], "1") == 0);
+
+
+    // Convertendo a data (dd/MM/yyyy)
+
+    char *data = array[c++];
+    sscanf(data, "%d/%d/%d", &pokemon->data.dia, &pokemon->data.mes, &pokemon->data.ano);
+
+    // Liberar a memória alocada para a divisão de strings
+    free(array);
+}
+
+
+
+int main() {
+    // Criando uma lista de ponteiros de pokémons para 801 pks
+    Pokemon* pks[801];
+
+    // Lidando com arquivo
+    FILE* file;
+    char linha[MAX];
+    
+    file = fopen("/tmp/pokemon.csv", "r");
+    if (!file) {
+        printf("Erro ao abrir o arquivo.\n");
+        return 1;
+    }
+
+    fgets(linha, sizeof(linha), file); // Ignorando o cabeçalho
+
+    for (int i = 0; i < 801; i++) {
+        fgets(linha, sizeof(linha), file);
+        pks[i] = pokemon_vazio();  // Criar um novo Pokémon vazio
+        ler(linha, pks[i]);        // Preencher o Pokémon com os dados da linha lida
+    }
+
+    fclose(file);
+
+    // Entrada do usuário
+    char entrada[500];
+    scanf("%[^\r\n]%*c", entrada);
+
+    // Loop até encontrar "FIM"
+    while (strcmp(entrada, "FIM") != 0) {
+        int numero = atoi(entrada);  // Convertendo string para int (se necessário)
+        imprimir(pks[numero-1]);
+        // Ler próxima entrada
+        scanf("%[^\r\n]%*c", entrada);
+    }
+
+    // Liberar memória dos pokémons
+    for (int i = 0; i < 801; i++) {
+        free(pks[i]);
+    }
+
     return 0;
 }
