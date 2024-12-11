@@ -187,7 +187,7 @@ class Pokemon {
         for(int i = 0; i < this.types.size(); i++){
             s3+="'"+this.types.get(i)+"'";
             if(i != types.size() - 1){
-                s3+=", ";
+                s3+=",";
             }
         }
         s3+="]";
